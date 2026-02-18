@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>diário lala cabeça oca</title>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@300;500&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #2d0a4e;
+      color: #f3e5f5;
+      font-family: 'Quicksand', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    header {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      background: linear-gradient(180deg, #4a148c 0%, #2d0a4e 100%);
+      width: 100%;
+      position: relative;
+      z-index: 2;
+    }
+
+    h1 {
+      font-family: 'Dancing Script', cursive;
+      font-size: clamp(3rem, 8vw, 5rem);
+      margin-bottom: 10px;
+      color: #e1bee7;
+      text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+      animation: fadeIn 1.2s ease-in;
+    }
+
+    .subtitle {
+      font-size: clamp(1rem, 3vw, 1.5rem);
+      font-weight: 300;
+      letter-spacing: 2px;
+      opacity: 0.85;
+      padding: 0 20px;
+      max-width: 900px;
+    }
+
+    .content-section {
+      width: 100%;
+      max-width: 900px;
+      padding: 50px 20px;
+      text-align: center;
+      line-height: 1.8;
+      z-index: 3;
+      position: relative;
+    }
+
+    h2 {
+      font-size: clamp(1.5rem, 4vw, 2rem);
+      margin-bottom: 30px;
+      color: #e1bee7;
+    }
+
+    .love-text {
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      background: rgba(255, 255, 255, 0.05);
+      padding: 30px;
+      border-radius: 20px;
+      border: 1px solid rgba(225, 190, 231, 0.2);
+      margin-bottom: 50px;
+      backdrop-filter: blur(6px);
+    }
+
+    .love-text p {
+      margin-bottom: 15px;
+    }
+
+    .love-text p:last-child {
+      margin-bottom: 0;
+    }
+
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 26px;
+      width: 100%;
+      margin-top: 30px;
+    }
+
+    .video-card {
+      border-radius: 18px;
+      background: rgba(74, 20, 140, 0.55);
+      border: 1px solid rgba(225, 190, 231, 0.16);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+      overflow: hidden;
+      transition: box-shadow 0.25s ease, border-color 0.25s ease;
+    }
+
+    .video-card:hover {
+      box-shadow: 0 18px 45px rgba(225, 190, 231, 0.25);
+      border-color: rgba(225, 190, 231, 0.28);
+    }
+
+    /* Wrapper 16:9 */
+    .video-wrap {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: #311b92;
+      overflow: hidden;
+      border-radius: 18px;
+      transform: translateZ(0);
+    }
+
+    /* Link clicável cobrindo tudo */
+    .video-link {
+      position: absolute;
+      inset: 0;
+      display: block;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* Thumbnail do YouTube */
+    .video-thumb {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transform: scale(1.04);
+      filter: saturate(1.05) contrast(1.02);
+      transition: transform 0.35s ease;
+    }
+
+    /* Overlay gradiente bonito */
+    .video-overlay {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 25% 25%, rgba(225, 190, 231, .22), transparent 55%),
+        radial-gradient(circle at 80% 30%, rgba(255, 64, 129, .14), transparent 60%),
+        linear-gradient(to top, rgba(0, 0, 0, .62), rgba(0, 0, 0, .10));
+      transition: opacity 0.35s ease;
+    }
+
+    /* Botão play */
+    .play-badge {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -55%);
+      width: 74px;
+      height: 74px;
+      border-radius: 999px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 0, .45);
+      border: 1px solid rgba(225, 190, 231, .35);
+      backdrop-filter: blur(8px);
+      font-size: 28px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, .35);
+      transition: transform 0.2s ease;
+    }
+
+    /* Texto embaixo */
+    .video-caption {
+      position: absolute;
+      left: 14px;
+      right: 14px;
+      bottom: 12px;
+      padding: 10px 12px;
+      border-radius: 14px;
+      background: rgba(0, 0, 0, .35);
+      border: 1px solid rgba(225, 190, 231, .22);
+      backdrop-filter: blur(8px);
+      font-weight: 500;
+      color: #f3e5f5;
+      text-align: center;
+      letter-spacing: 0.3px;
+    }
+
+    .video-card:hover .play-badge {
+      transform: translate(-50%, -55%) scale(1.06);
+    }
+
+    .video-card:hover .video-thumb {
+      transform: scale(1.10);
+    }
+
+    /* Placeholder (pra vídeos futuros) */
+    .video-placeholder {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #ce93d8;
+      font-style: italic;
+      text-align: center;
+      padding: 22px;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(225, 190, 231, 0.18), transparent 45%),
+        radial-gradient(circle at 80% 30%, rgba(255, 64, 129, 0.12), transparent 55%),
+        #311b92;
+    }
+
+    footer {
+      padding: 50px 20px;
+      text-align: center;
+      font-family: 'Dancing Script', cursive;
+      font-size: clamp(1.5rem, 4vw, 2rem);
+      color: #f3e5f5;
+      width: 100%;
+      z-index: 3;
+      position: relative;
+    }
+
+    .heart {
+      color: #ff4081;
+      display: inline-block;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(14px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(1.18);
+      }
+    }
+
+    .stars {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+
+
+    @media (max-width: 768px) {
+      .video-grid {
+        grid-template-columns: 1fr;
+        gap: 18px;
+      }
+
+      .love-text {
+        padding: 20px;
+      }
+    }
+    
+    .side-arts {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    /* Base */
+    .side-art {
+      position: absolute;
+      bottom: 0;
+      width: min(32vw, 420px);
+      max-height: 88vh;
+      object-fit: contain;
+      opacity: 0.85;
+
+      filter: drop-shadow(0 18px 35px rgba(0, 0, 0, .55));
+    }
+
+    .side-art.left {
+      left: 0;
+      transform: translateX(-12%) scale(1.02);
+    }
+
+    .side-art.right {
+      right: 0;
+      transform: translateX(12%) scale(1.02);
+    }
+
+    .content-section {
+      padding-left: clamp(20px, 10vw, 140px);
+      padding-right: clamp(20px, 10vw, 140px);
+    }
+
+    @media (max-width: 900px) {
+      .side-arts {
+        display: none;
+      }
+
+      .content-section {
+        padding-left: 20px;
+        padding-right: 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="stars" id="stars"></div>
+
+
+  <header>
+    <div class="side-arts" aria-hidden="true">
+      <img class="side-art left" src="https://i.imgur.com/Vz2xb5L.png" alt="">
+      <img class="side-art right" src="https://i.imgur.com/bqMZlIv.png" alt="">
+    </div>
+    
+    <h1>Para a Lala CHANNNN</h1>
+    <p class="subtitle">o nosso diário de aventuras</p>
+  </header>
+
+  <section class="content-section">
+    <div class="love-text">
+      <p>
+        salvarei as nossas aventuras aqui, pra sempre lembrarmos como
+        a gente se divertiu
+      </p>
+      <p>
+        Este site é apenas uma pequena forma de dizer o quanto você é especial para mim.
+      </p>
+    </div>
+
+    <h2>Nossas Memórias <span class="heart">❤</span></h2>
+
+    <div class="video-grid">
+
+      <div class="video-card">
+        <div class="video-wrap">
+          <a class="video-link" href="https://www.youtube.com/watch?v=DYWlC0Y19wE" target="_blank" rel="noopener">
+            <img class="video-thumb" src="https://i.ytimg.com/vi/DYWlC0Y19wE/hqdefault.jpg" alt="Assistir no YouTube">
+            <div class="video-overlay"></div>
+            <div class="play-badge" aria-hidden="true">▶</div>
+            <div class="video-caption">Assistir no YouTube</div>
+          </a>
+        </div>
+      </div>
+
+      <div class="video-card">
+        <div class="video-wrap">
+          <a class="video-link" href="https://www.youtube.com/watch?v=n9ieWD6lZAE" target="_blank" rel="noopener">
+            <img class="video-thumb" src="https://i.ytimg.com/vi/n9ieWD6lZAE/hqdefault.jpg" alt="Assistir no YouTube">
+            <div class="video-overlay"></div>
+            <div class="play-badge" aria-hidden="true">▶</div>
+            <div class="video-caption">Assistir no YouTube</div>
+          </a>
+        </div>
+      </div>
+
+      <div class="video-card">
+        <div class="video-wrap">
+          <a class="video-link" href="https://www.youtube.com/watch?v=3GUFm2R9Lys" target="_blank" rel="noopener">
+            <img class="video-thumb" src="https://i.ytimg.com/vi/3GUFm2R9Lys/hqdefault.jpg" alt="Assistir no YouTube">
+            <div class="video-overlay"></div>
+            <div class="play-badge" aria-hidden="true">▶</div>
+            <div class="video-caption">Assistir no YouTube</div>
+          </a>
+        </div>
+      </div>
+
+
+      <div class="video-card">
+        <div class="video-wrap">
+          <a class="video-link" href="https://www.youtube.com/watch?v=dZT5hvETdFU" target="_blank" rel="noopener">
+            <img class="video-thumb" src="https://i.ytimg.com/vi/dZT5hvETdFU/hqdefault.jpg" alt="Assistir no YouTube">
+            <div class="video-overlay"></div>
+            <div class="play-badge" aria-hidden="true">▶</div>
+            <div class="video-caption">Assistir no YouTube</div>
+          </a>
+        </div>
+      </div>
+
+
+    </div>
+  </section>
+
+  <footer>
+    lala cabeça oca demais
+  </footer>
+
+  <script>
+    // Estrelas no fundo
+    const starsContainer = document.getElementById('stars');
+    const STAR_COUNT = 110;
+
+    for (let i = 0; i < STAR_COUNT; i++) {
+      const star = document.createElement('div');
+      const size = Math.random() * 2.4 + 0.6;
+
+      star.style.position = 'absolute';
+      star.style.left = Math.random() * 100 + '%';
+      star.style.top = Math.random() * 100 + '%';
+      star.style.width = size + 'px';
+      star.style.height = size + 'px';
+      star.style.backgroundColor = '#fff';
+      star.style.borderRadius = '50%';
+      star.style.opacity = (Math.random() * 0.6 + 0.25).toFixed(2);
+      star.style.boxShadow = `0 0 ${Math.random() * 6 + 2}px rgba(255, 255, 255, 0.8)`;
+
+      // demorei pakas poha
+
+      starsContainer.appendChild(star);
+    }
+  </script>
+
+</body>
+
+</html>
